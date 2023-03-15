@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
+import Swal from "sweetalert2";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Col, Container, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+
 import { loginAction } from "../../redux/action/authAction";
-import Swal from "sweetalert2";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -14,15 +15,15 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (user.password.length < 8) {
-    //   Swal.fire(
-    //     "Invalid Input!",
-    //     "Password should be at least 8 characters!",
-    //     "error"
-    //   );
-    // } else {
-    // }
-    dispatch(loginAction(user));
+    if (user.password.length < 8) {
+      Swal.fire(
+        "Invalid Input!",
+        "Password should be at least 8 characters!",
+        "error"
+      );
+    } else {
+      dispatch(loginAction(user));
+    }
   };
 
   return (

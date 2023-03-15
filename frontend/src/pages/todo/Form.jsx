@@ -14,7 +14,7 @@ const initialTodo = {
   title: "",
   description: "",
   date: "",
-  status: STATUS.pending,
+  status: "pending",
 };
 
 const TodoForm = ({ page, limit, handleClose }) => {

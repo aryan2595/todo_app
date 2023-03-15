@@ -17,13 +17,18 @@ exports.todoSchema = [
     .isISO8601("yyyy-mm-dd")
     .toDate()
     .custom((date) => {
-      const currDate = new Date();
+      const currTime = new Date().getTime() - 24 * 60 * 60 * 1000;
 
-      if (date.getTime() < currDate.getTime()) {
+      if (date.getTime() < currTime) {
         throw new Error("Date must be start from today");
       }
 
       return true;
     }),
-  check("status").not().isIn(["pending", "in_progress", "completed"]),
+  check("status").isIn(["pending", "in_progress", "completed"]),
+];
+
+exports.updateTodoSchema = [
+  ...this.todoSchema,
+  body("id", "ID is required!").not().isEmpty(),
 ];
