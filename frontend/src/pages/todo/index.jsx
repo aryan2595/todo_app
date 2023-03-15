@@ -123,37 +123,43 @@ const TodoList = () => {
                     <th>Description</th>
                     <th>Date</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {todos
-                    ? todos.docs.map((item) => {
-                        return (
-                          <tr key={item.id}>
-                            <td>{item.title}</td>
-                            <td>{item.description || "-"}</td>
-                            <td>{moment(item.date).format("Do MMM, YYYY")}</td>
-                            <td>{STATUS[item.status]}</td>
-                            <td className="text-center">
-                              <Button
-                                variant="warning"
-                                onClick={() => handleEdit(item.id)}
-                              >
-                                <EditIcon />
-                              </Button>
-                              <Button
-                                className="ms-3"
-                                variant="danger"
-                                onClick={() => handleDelete(item.id)}
-                              >
-                                <DeleteIcon />
-                              </Button>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    : null}
+                  {todos && todos.totalDocs ? (
+                    todos.docs.map((item) => {
+                      return (
+                        <tr key={item.id}>
+                          <td>{item.title}</td>
+                          <td>{item.description || "-"}</td>
+                          <td>{moment(item.date).format("Do MMM, YYYY")}</td>
+                          <td>{STATUS[item.status]}</td>
+                          <td className="text-center">
+                            <Button
+                              variant="warning"
+                              onClick={() => handleEdit(item.id)}
+                            >
+                              <EditIcon />
+                            </Button>
+                            <Button
+                              className="ms-3"
+                              variant="danger"
+                              onClick={() => handleDelete(item.id)}
+                            >
+                              <DeleteIcon />
+                            </Button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <th className="text-center" colSpan={6}>
+                        No data found!
+                      </th>
+                    </tr>
+                  )}
                 </tbody>
               </Table>
             </Card.Body>

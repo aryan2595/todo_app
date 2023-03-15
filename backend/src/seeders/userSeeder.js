@@ -10,5 +10,7 @@ exports.createUser = async () => {
       email: "hari@test.com",
       password: "12345678",
     }).save();
+
+    console.log("User created.");
   }
 };
