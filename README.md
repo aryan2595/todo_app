@@ -3,14 +3,14 @@
   - press ctrl + shift + ` (in vs code)
   - cd backend
   - npm i
-  - create .env file and copy data from .env.example or save as .env
+  - .env.example save as .env
   - npm start
 
 2. Frontend
   - press ctrl + shift + ` (in vs code)
   - cd frontend
   - npm i
-  - create .env file and copy data from .env.example or save as .env
+  - .env.example save as .env
   - npm start
 
 # User Credential

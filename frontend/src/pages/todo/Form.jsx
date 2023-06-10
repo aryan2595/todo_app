@@ -103,7 +103,25 @@ const TodoForm = ({ page, limit, handleClose }) => {
           </Form.Select>
         </Form.Group>
 
-        {oldTodo ? (
+        <div className="text-end mt-3">
+          <Button
+            variant="secondary"
+            className="me-3 px-5"
+            onClick={handleClose}
+          >
+            Close
+          </Button>
+          <Button
+            className="px-5 py-2"
+            variant={oldTodo ? "warning" : "primary"}
+            type="button"
+            onClick={handleSubmit}
+          >
+            {oldTodo ? "Update" : "Create"}
+          </Button>
+        </div>
+
+        {/* {oldTodo ? (
           <Button
             className="mt-3 mb-5 px-5 py-2 float-end"
             variant="warning"
@@ -121,7 +139,7 @@ const TodoForm = ({ page, limit, handleClose }) => {
           >
             Add Todo
           </Button>
-        )}
+        )} */}
       </Form>
     </>
   );

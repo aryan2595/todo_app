@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
-const CustomModal = ({ children, onHide, ...rest }) => {
+const CustomModal = ({ children, title, onHide, ...rest }) => {
   return (
     <>
       <Modal
@@ -11,14 +11,9 @@ const CustomModal = ({ children, onHide, ...rest }) => {
         centered
       >
         <Modal.Header>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
-          </Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{children}</Modal.Body>
-        <Modal.Footer>
-          <Button onClick={onHide}>Close</Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

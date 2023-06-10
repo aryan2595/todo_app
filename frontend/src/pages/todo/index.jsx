@@ -13,10 +13,12 @@ import {
   Table,
 } from "react-bootstrap";
 
+import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import {
+  changeStatusAction,
   clearTodoAction,
   todoDetailAction,
   todoListAction,
@@ -66,6 +68,11 @@ const TodoList = () => {
     dispatch(todoListAction({ limit, page }));
   }, [dispatch, limit, page]);
 
+  const handleLimit = (value) => {
+    setLimit(value);
+    setPage(1);
+  };
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -95,6 +102,10 @@ const TodoList = () => {
     handleShow();
   };
 
+  const handleChangeStatus = (id) => {
+    dispatch(changeStatusAction({ id, status: "completed" }, page, limit));
+  };
+
   return (
     <>
       <Row>
@@ -108,7 +119,11 @@ const TodoList = () => {
             ADD NEW
           </Button>
 
-          <CustomModal show={show} onHide={() => handleClose(false)}>
+          <CustomModal
+            show={show}
+            title="Add - Edit Todo"
+            onHide={() => handleClose(false)}
+          >
             <TodoForm page={page} limit={limit} handleClose={handleClose} />
           </CustomModal>
         </Col>
@@ -119,6 +134,7 @@ const TodoList = () => {
               <Table className="m-0" striped bordered hover>
                 <thead>
                   <tr>
+                    <th className="text-center">#</th>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Date</th>
@@ -128,27 +144,42 @@ const TodoList = () => {
                 </thead>
                 <tbody>
                   {todos && todos.totalDocs ? (
-                    todos.docs.map((item) => {
+                    todos.docs.map((item, i) => {
                       return (
                         <tr key={item.id}>
+                          <th className="text-center">
+                            {limit * (page - 1) + (i + 1)}
+                          </th>
                           <td>{item.title}</td>
                           <td>{item.description || "-"}</td>
                           <td>{moment(item.date).format("Do MMM, YYYY")}</td>
                           <td>{STATUS[item.status]}</td>
-                          <td className="text-center">
+                          <td>
                             <Button
                               variant="warning"
+                              className="btn-sm"
                               onClick={() => handleEdit(item.id)}
                             >
                               <EditIcon />
                             </Button>
                             <Button
-                              className="ms-3"
+                              className="ms-3 btn-sm"
                               variant="danger"
                               onClick={() => handleDelete(item.id)}
                             >
                               <DeleteIcon />
                             </Button>
+                            {item.status !== "completed" ? (
+                              <Button
+                                className="ms-3 btn-sm"
+                                variant="success"
+                                onClick={() => handleChangeStatus(item.id)}
+                              >
+                                <DoneIcon />
+                              </Button>
+                            ) : (
+                              <></>
+                            )}
                           </td>
                         </tr>
                       );
@@ -172,11 +203,12 @@ const TodoList = () => {
           <Col xs={2}>
             <Form.Select
               name="limit"
-              onChange={(e) => setLimit(e.target.value)}
+              onChange={(e) => handleLimit(e.target.value)}
               defaultValue={limit}
             >
               <option value={1}>1</option>
               <option value={5}>5</option>
+              <option value={10}>10</option>
               <option value={25}>25</option>
               <option value={50}>50</option>
               <option value={100}>100</option>

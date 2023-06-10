@@ -4,8 +4,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavDropdown } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { getUserProfile, logOut } from "../redux/action/authAction";
 
@@ -44,8 +44,6 @@ const Topbar = () => {
           <Nav className="ms-auto">
             {isAuthenticated ? (
               <NavDropdown title={user?.firstName} id="userDropdown">
-                <NavDropdown.Item>Profile</NavDropdown.Item>
-                <NavDropdown.Divider />
                 <NavDropdown.Item onClick={() => dispatch(logOut())}>
                   Logout
                 </NavDropdown.Item>

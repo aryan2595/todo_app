@@ -83,6 +83,27 @@ export const todoDetailAction = (id) => {
   };
 };
 
+export const changeStatusAction = (data, page, limit) => {
+  return async (dispatch) => {
+    try {
+      const resp = await APIHelper.put(`/todo/change-status`, data);
+
+      if (resp.status === 200) {
+        const res = await APIHelper.get("/todo/list", {
+          params: { limit, page },
+        });
+
+        dispatch({
+          type: TODO_LIST,
+          payload: res.data,
+        });
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+};
+
 export const clearTodoAction = () => {
   return {
     type: CLAER_TODO,
